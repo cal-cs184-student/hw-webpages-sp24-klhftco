@@ -25,6 +25,7 @@
 
 <h1 align="middle">CS 184/284A: Computer Graphics and Imaging, Spring 2024</h1>
 <h1 align="middle">Homework 1: Rasterizer</h1>
+<h1 align="middle">page link: https://cal-cs184-student.github.io/hw-webpages-sp24-klhftco/hw1/index.html</h1>
 <h2 align="middle">Leo Huang and Larissa Tsai</h2>
 
 <br><br>
@@ -32,7 +33,7 @@
 <div>
 
 <h2 align="middle">Overview</h2>
-<p>Give a high-level overview of what you implemented in this homework Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.</p>
+<p>We implemented rasterization and different techniques in texture mapping and compared and contrasted the different ways to execute each technique. We also compared the final rendered images to see the anti-aliasing effects.</p>
 
 <h2 align="middle">Section I: Rasterization</h2>
 
@@ -106,19 +107,19 @@
     <tr>
       <td>
         <img src="images/nearest_1.png" align="middle" width="200px"/>
-        <figcaption align="middle">Nearest; 1 sample </figcaption>
+        <figcaption align="middle">Nearest, 1 sample </figcaption>
       </td>
       <td>
         <img src="images/bilinear_1.png" align="middle" width="200px"/>
-        <figcaption align="middle">Bilinear; 1 sample </figcaption>
+        <figcaption align="middle">Bilinear, 1 sample </figcaption>
       </td>
       <td>
         <img src="images/nearest_16.png" align="middle" width="200px"/>
-        <figcaption align="middle">Nearest; 16 samples </figcaption>
+        <figcaption align="middle">Nearest, 16 samples </figcaption>
       </td>
       <td>
         <img src="images/bilinear_16.png" align="middle" width="200px"/>
-        <figcaption align="middle">Bilinear; 16 samples</figcaption>
+        <figcaption align="middle">Bilinear, 16 samples</figcaption>
       </td>
     </tr>
   </table>
@@ -128,7 +129,32 @@
 
 <h3 align="middle">Part 6: "Level sampling" with mipmaps for texture mapping</h3>
 
-<p>We implemented the 3 modes of levels: 0, nearest, and linear. 0 always samples from the original texture map. Nearest uses the formula from lecture and rounds it to find the appropriate mipmap level corresponding to the Jacobian input to sample from. Linear averages samples from the nearest level and its neighboring levels for a smoother, linearized output.</p>
+<p>We implemented the 3 modes of levels: 0, nearest, and linear. 0 always samples from the original texture map. Nearest uses the formula from lecture and rounds it to find the appropriate mipmap level corresponding to the Jacobian input to sample from.Linear averages the samples taken from the nearest level from above and below, to generate a smoother, linearized output.</p>
+
+<p>Between the 3 techniques, pixel sampling is a little faster and memory-efficient, as it doesn't have to store lots of information like multiple mipmap levels. If using nearest neighbor pixel sampling method, it is even faster, at the cost of anti-aliasing power. Using level mapping helps a lot with anti-aliasing, but requires more calculation and storage to get the most efficient combination of levels. However, using different levels instead of always using level 0 could speed up the process a bit. Supersampling has a lot of anti-aliasing power, but as it increases, so do number of calculations and amount of storage needed to store the samples.</p>
+
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/0, NEAR.png" align="middle" width="200px"/>
+        <figcaption align="middle">L_ZERO, P_NEAREST </figcaption>
+      </td>
+      <td>
+        <img src="images/0, LIN.png" align="middle" width="200px"/>
+        <figcaption align="middle">L_ZERO, P_LINEAR </figcaption>
+      </td>
+      <td>
+        <img src="images/NEAR, NEAR.png" align="middle" width="200px"/>
+        <figcaption align="middle">L_NEAREST, P_NEAREST</figcaption>
+      </td>
+      <td>
+        <img src="images/NEAR, LIN.png" align="middle" width="200px"/>
+        <figcaption align="middle">L_NEAREST, P_LINEAR</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
 
 <h2 align="middle">Section III: Art Competition</h2>
 <p>If you are not participating in the optional art competition, don't worry about this section!</p>
